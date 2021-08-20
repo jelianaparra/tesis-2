@@ -1,4 +1,5 @@
 import { body } from "express-validator"
+import { connect } from "../database.js"
 
 export const loginValidator = [
     body('email').isEmail(),
@@ -46,3 +47,31 @@ export const uDocValidator = [
     body('id').isNumeric({min: 1}),
     body('descripcion').isAlpha().isLength({min: 5, max: 100})
 ]
+
+export const usuarioPuede = async  (perfil, permisoToCheck) => {
+    return await connect().then(async (pool) => {
+         let result = await  pool
+        .query(
+          "select * from perfil join permiso using(id_perfil) join proceso on proceso.id_proceso=permiso.id_proceso where id_perfil=$1",
+          [perfil]
+        )
+        .then((data) => {
+          if (data.rowCount === 0) {
+           return (false);
+          }
+          for (let permiso = 0; permiso < data.rows.length; permiso++) {
+            const element = data.rows[permiso].de_proceso;
+            if (element === permisoToCheck) {
+              return (true)
+            }
+          }
+          return (false)
+        })
+        .catch((err) => {
+          console.log(err);
+          return false;
+        });
+        console.log('re',result)
+        return result;
+    }) 
+}
