@@ -7,7 +7,7 @@ import { login } from "./controllers/user.js";
 
 const app = express();
 
-const port = process.env.port || 50502
+const port = process.env.PORT || 50502
 
 app.use(express.json());
 
