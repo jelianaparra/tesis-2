@@ -1,5 +1,4 @@
 import express from "express"
-import morgan from "morgan";
 import userRoutes from "./routes/user.js";
 import docRoutes from "./routes/doc.js";
 import solRoutes from "./routes/solicitud.js";
