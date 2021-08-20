@@ -9,7 +9,7 @@ const port = process.env.port || 50502
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use('/api/v1', userRoutes);
+app.use('/api/v1/user', userRoutes);
 
 app.listen(port, () => {
     console.log("App Listening on port " + port)

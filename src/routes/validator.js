@@ -38,3 +38,11 @@ export const uRequestValidator = [
     body('tipo').isNumeric({min: 1}),
     body('id').isNumeric({min: 1})
 ]
+
+export const docValidator = [
+    body('descripcion').isAlpha().isLength({min: 5, max: 100})
+]
+export const uDocValidator = [
+    body('id').isNumeric({min: 1}),
+    body('descripcion').isAlpha().isLength({min: 5, max: 100})
+]

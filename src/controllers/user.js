@@ -26,10 +26,11 @@ export const login = async (req, res) => {
                 {
                   user: data.rows[0].id_usuario,
                   nombre: data.rows[0].no_usuario,
+                  perfil: data.rows[0].id_perfil
                 },
                 process.env.SECRET
               );
-              res.json({ id: data.rows[0].id, user: token });
+              res.status(201).json({ id: data.rows[0].id_usuario, usero: token });
             } else {
               res.status(401).json({ user: "Bad Credentials" });
             }
@@ -66,11 +67,11 @@ export const register = async (req, res) => {
           let hash = await bcrypt.hash(req.body.password, salt);
           pool
             .query(
-              "insert into usuario (no_usuario, cl_usuario, id_persona) values ($1, $2, $3)",
-              [req.body.nombre, hash, data.rows[0].id_persona]
+              "insert into usuario (no_usuario, cl_usuario, id_persona, id_perfil) values ($1, $2, $3, $4)",
+              [req.body.nombre, hash, data.rows[0].id_persona, req.body.perfil ?? 2]
             )
             .then((user) => {
-              console.log("User created.");
+                console.log("User created.");
               res.status(201).json({ user: data });
             })
             .catch((e) => {

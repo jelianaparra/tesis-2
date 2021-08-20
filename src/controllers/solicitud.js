@@ -24,7 +24,7 @@ export const request = async (req, res) => {
         })
         .catch((err) => {
           console.log(err);
-          return res.status(500).json();
+          return res.status(400).json();
         });
     })
     .catch((e) => {
@@ -88,6 +88,7 @@ export const show = async (req, res) => {
       return res.status(500).json();
     });
 };
+
 export const process = async (req, res) => {
   const e = validationResult(req);
   if (!e.isEmpty()) {
@@ -98,13 +99,13 @@ export const process = async (req, res) => {
     .then((pool) => {
       pool
         .query(
-          "update solicitud set st_solicitud='process' where id_solicitud=$1;",
+          "update solicitud set st_solicitud='aprobada' where id_solicitud=$1;",
           [
             req.body.id
           ]
         )
         .then((data) => {
-          return res.status(201).json({ solicitud: "solicitud status process" });
+          return res.status(201).json({ solicitud: "solicitud status aprobada" });
         })
         .catch((err) => {
           console.log(err);
@@ -127,13 +128,13 @@ export const deliver = async (req, res) => {
     .then((pool) => {
       pool
         .query(
-          "update solicitud set st_solicitud='delivered' where id_solicitud=$1;",
+          "update solicitud set st_solicitud='entregada' where id_solicitud=$1;",
           [
             req.body.id
           ]
         )
         .then((data) => {
-          return res.status(201).json({ solicitud: "solicitud status delivered" });
+          return res.status(201).json({ solicitud: "solicitud entregada" });
         })
         .catch((err) => {
           console.log(err);

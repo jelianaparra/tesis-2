@@ -16,7 +16,36 @@ export const show = async (req, res) => {
             ]
           )
           .then((data) => {
-            return res.status(200).json({ solicitud: data.rows[0] });
+            return res.status(200).json({ documentos: data.rows[0] });
+          })
+          .catch((err) => {
+            console.log(err);
+            return res.status(500).json();
+          });
+      })
+      .catch((e) => {
+        console.log(e);
+        return res.status(500).json();
+      });
+  };
+
+export const index = async (req, res) => {
+    const e = validationResult(req);
+    if (!e.isEmpty()) {
+      console.log(e);
+      return res.status(400).json({ errors: e.array() });
+    }
+    await connect()
+      .then((pool) => {
+        pool
+          .query(
+            "select * from tipo_documento;",
+            [
+              req.body.id
+            ]
+          )
+          .then((data) => {
+            return res.status(200).json({ documentos: data.rows });
           })
           .catch((err) => {
             console.log(err);
@@ -75,7 +104,7 @@ export const update = async (req, res) => {
             ]
           )
           .then((data) => {
-            return res.status(201).json({documento: 'Documento creado' });
+            return res.status(201).json({documento: 'Documento modificado' });
           })
           .catch((err) => {
             console.log(err);
