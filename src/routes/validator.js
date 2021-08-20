@@ -19,3 +19,22 @@ export const updateValidator = [
     body('email').isEmail().isLength({min: 6, max: 25}),
     body('id').isNumeric({min: 1}),
 ]
+
+export const showValidator = [
+    body('id').isNumeric({min: 1})
+]
+
+export const requestValidator = [
+    body('description').isAlpha(),
+    body('fecha').isDate(),
+    body('usuario').isNumeric({min: 1}),
+    body('tipo').isNumeric({min: 1})
+]
+
+export const uRequestValidator = [
+    body('description').isAlpha(),
+    body('fecha').isDate(),
+    body('usuario').isNumeric({min: 1}),
+    body('tipo').isNumeric({min: 1}),
+    body('id').isNumeric({min: 1})
+]
