@@ -6,6 +6,15 @@ export const request = async (req, res) => {
     console.log(e);
     return res.status(400).json({ errors: e.array() });
   }
+  let hasPermiso = false;
+  await usuarioPuede(req.user.perfil, "solicitardocumento")
+    .then((data) => {
+      hasPermiso = data;
+    })
+    .catch((err) => console.log(err));
+  if (!hasPermiso) {
+    return res.status(401).json({ msg: "Usuario no autorizado" });
+  }
   await connect()
     .then((pool) => {
       pool
@@ -39,6 +48,15 @@ export const index = async (req, res) => {
     console.log(e);
     return res.status(400).json({ errors: e.array() });
   }
+  let hasPermiso = false;
+  await usuarioPuede(req.user.perfil, "versolicitudes")
+    .then((data) => {
+      hasPermiso = data;
+    })
+    .catch((err) => console.log(err));
+  if (!hasPermiso) {
+    return res.status(401).json({ msg: "Usuario no autorizado" });
+  }
   await connect()
     .then((pool) => {
       pool
@@ -65,6 +83,15 @@ export const show = async (req, res) => {
   if (!e.isEmpty()) {
     console.log(e);
     return res.status(400).json({ errors: e.array() });
+  }
+  let hasPermiso = false;
+  await usuarioPuede(req.user.perfil, "versolicitud")
+    .then((data) => {
+      hasPermiso = data;
+    })
+    .catch((err) => console.log(err));
+  if (!hasPermiso) {
+    return res.status(401).json({ msg: "Usuario no autorizado" });
   }
   await connect()
     .then((pool) => {
@@ -95,6 +122,15 @@ export const process = async (req, res) => {
     console.log(e);
     return res.status(400).json({ errors: e.array() });
   }
+  let hasPermiso = false;
+  await usuarioPuede(req.user.perfil, "aprobarsolicitud")
+    .then((data) => {
+      hasPermiso = data;
+    })
+    .catch((err) => console.log(err));
+  if (!hasPermiso) {
+    return res.status(401).json({ msg: "Usuario no autorizado" });
+  }
   await connect()
     .then((pool) => {
       pool
@@ -124,6 +160,15 @@ export const deliver = async (req, res) => {
     console.log(e);
     return res.status(400).json({ errors: e.array() });
   }
+  let hasPermiso = false;
+  await usuarioPuede(req.user.perfil, "marcaraprobada")
+    .then((data) => {
+      hasPermiso = data;
+    })
+    .catch((err) => console.log(err));
+  if (!hasPermiso) {
+    return res.status(401).json({ msg: "Usuario no autorizado" });
+  }
   await connect()
     .then((pool) => {
       pool
@@ -135,6 +180,44 @@ export const deliver = async (req, res) => {
         )
         .then((data) => {
           return res.status(201).json({ solicitud: "solicitud entregada" });
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(500).json();
+        });
+    })
+    .catch((e) => {
+      console.log(e);
+      return res.status(500).json();
+    });
+};
+
+export const deleteSolicitud = async (req, res) => {
+  const e = validationResult(req);
+  if (!e.isEmpty()) {
+    console.log(e);
+    return res.status(400).json({ errors: e.array() });
+  }
+  let hasPermiso = false;
+  await usuarioPuede(req.user.perfil, "borrarsolicitud")
+    .then((data) => {
+      hasPermiso = data;
+    })
+    .catch((err) => console.log(err));
+  if (!hasPermiso) {
+    return res.status(401).json({ msg: "Usuario no autorizado" });
+  }
+  await connect()
+    .then((pool) => {
+      pool
+        .query(
+          "delete from solicitud where id_solicitud=$1;",
+          [
+            req.body.id
+          ]
+        )
+        .then((data) => {
+          return res.status(201).json({ solicitud: "solicitud borrada" });
         })
         .catch((err) => {
           console.log(err);

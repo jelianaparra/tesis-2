@@ -4,7 +4,6 @@ import { loginValidator, registerValidator, updateValidator } from "./validator.
 
 const routes = express.Router();
 
-routes.post('/login', loginValidator, login)
 routes.post('/register', registerValidator, register)
 routes.post('/update', update)
 

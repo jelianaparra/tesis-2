@@ -26,6 +26,7 @@ export const login = async (req, res) => {
                 {
                   user: data.rows[0].id_usuario,
                   nombre: data.rows[0].no_usuario,
+                  persona: data.rows[0].id_persona,
                   perfil: data.rows[0].id_perfil
                 },
                 process.env.SECRET
@@ -54,6 +55,15 @@ export const register = async (req, res) => {
   if (!e.isEmpty()) {
     console.log(e);
     return res.status(400).json({ errors: e.array() });
+  }
+  let hasPermiso = false;
+  await usuarioPuede(req.user.perfil, "crear-usuario")
+    .then((data) => {
+      hasPermiso = data;
+    })
+    .catch((err) => console.log(err));
+  if (!hasPermiso) {
+    return res.status(401).json({ msg: "Usuario no autorizado" });
   }
   await connect()
     .then((pool) => {
@@ -95,6 +105,19 @@ export const update = async (req, res) => {
   if (!e.isEmpty()) {
     console.log(e);
     return res.status(400).json({ errors: e.array() });
+  }
+  let hasPermiso = false;
+  if(req.user.id_persona === req.body.id){
+      hasPermiso = true;
+  }else{
+      await usuarioPuede(req.user.perfil, "actualizar-persona")
+        .then((data) => {
+          hasPermiso = data;
+        })
+        .catch((err) => console.log(err));
+  }
+  if (!hasPermiso) {
+    return res.status(401).json({ msg: "Usuario no autorizado" });
   }
   if (
     req.body.nombre === undefined &&
