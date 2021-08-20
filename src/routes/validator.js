@@ -12,3 +12,10 @@ export const registerValidator = [
     body('email').isEmail().isLength({min: 6, max: 25}),
     body('password').isLength({min: 6, max: 25})
 ]
+export const updateValidator = [
+    body('nombre').isAlpha().isLength({min: 3, max: 20}).optional(),
+    body('apellido').isAlpha().isLength({min: 3, max: 25}).optional(),
+    body('cedula').isNumeric({min: 1000, max: 10000}).optional,
+    body('email').isEmail().isLength({min: 6, max: 25}),
+    body('id').isNumeric({min: 1}),
+]
