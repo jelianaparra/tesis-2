@@ -81,12 +81,12 @@ export const register = async (req, res) => {
               [req.body.nombre, hash, data.rows[0].id_persona, req.body.perfil ?? 2]
             )
             .then((user) => {
-                console.log("User created.");
+                console.log("Usuario creado.");
               res.status(201).json({ user: data });
             })
             .catch((e) => {
               console.log(e);
-              res.status(500).json("Failed to create user");
+              res.status(500).json("Usuario no creado");
             });
         })
         .catch((e) => {
@@ -139,7 +139,7 @@ export const update = async (req, res) => {
       pool
         .query(query, [req.body.id])
         .then((data) => {
-          return res.status(201).json({ msg: "Persona Updated" });
+          return res.status(201).json({ msg: "Persona actualizada" });
         })
         .catch((e) => {
           console.log(e);

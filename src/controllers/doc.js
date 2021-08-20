@@ -9,7 +9,7 @@ export const show = async (req, res) => {
     return res.status(400).json({ errors: e.array() });
   }
   let hasPermiso = false;
-  await usuarioPuede(req.user.perfil, "verdocumento")
+  await usuarioPuede(req.user.perfil, "ver-documento")
     .then((data) => {
       hasPermiso = data;
     })
@@ -44,7 +44,7 @@ export const index = async (req, res) => {
     return res.status(400).json({ errors: e.array() });
   }
   let hasPermiso = false;
-  await usuarioPuede(req.user.perfil, "verdocumentos")
+  await usuarioPuede(req.user.perfil, "ver-documentos")
     .then((data) => {
       hasPermiso = data;
     })
@@ -77,7 +77,7 @@ export const store = async (req, res) => {
     return res.status(400).json({ errors: e.array() });
   }
   let hasPermiso = false;
-  await usuarioPuede(req.user.perfil, "creardocumento")
+  await usuarioPuede(req.user.perfil, "crear-documento")
     .then((data) => {
       hasPermiso = data;
     })
@@ -112,7 +112,7 @@ export const update = async (req, res) => {
     return res.status(400).json({ errors: e.array() });
   }
   let hasPermiso = false;
-  await usuarioPuede(req.user.perfil, "actualizardocumento")
+  await usuarioPuede(req.user.perfil, "actualizar-documento")
     .then((data) => {
       hasPermiso = data;
     })
@@ -148,7 +148,7 @@ export const deleteDoc = async (req, res) => {
     return res.status(400).json({ errors: e.array() });
   }
   let hasPermiso = false;
-  await usuarioPuede(req.user.perfil, "borrardocumento")
+  await usuarioPuede(req.user.perfil, "borrar-documento")
     .then((data) => {
       hasPermiso = data;
     })

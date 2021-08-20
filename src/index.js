@@ -4,12 +4,14 @@ import docRoutes from "./routes/doc.js";
 import solRoutes from "./routes/solicitud.js";
 import middle from "./middle/middle.js";
 import { login } from "./controllers/user.js";
+import cors from 'cors';
 
 const app = express();
 
 const port = process.env.PORT || 50502
 
 app.use(express.json());
+app.use(cors())
 
 app.use('/api/v1/user/login', login);
 app.use('/api/v1/user',middle, userRoutes);
