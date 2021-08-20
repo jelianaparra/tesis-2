@@ -33,6 +33,33 @@ export const request = async (req, res) => {
     });
 };
 
+export const index = async (req, res) => {
+  const e = validationResult(req);
+  if (!e.isEmpty()) {
+    console.log(e);
+    return res.status(400).json({ errors: e.array() });
+  }
+  await connect()
+    .then((pool) => {
+      pool
+        .query(
+          "select * from solicitud order by id;",
+          [
+          ]
+        )
+        .then((data) => {
+          return res.status(200).json({ solicitud: data.rows });
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(500).json();
+        });
+    })
+    .catch((e) => {
+      console.log(e);
+      return res.status(500).json();
+    });
+};
 export const show = async (req, res) => {
   const e = validationResult(req);
   if (!e.isEmpty()) {
@@ -45,7 +72,7 @@ export const show = async (req, res) => {
         .query(
           "select * from solicitud where id_solicitud=$1;",
           [
-            req.body.id
+            req.params.id
           ]
         )
         .then((data) => {
