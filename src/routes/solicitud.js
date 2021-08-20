@@ -1,5 +1,6 @@
 import express from 'express'
-import { deleteSolicitud, deliver, index, process, request, show, update } from '../controllers/solicitud.js';
+import { deleteSolicitud, deliver, index, process, request, show } from '../controllers/solicitud.js';
+import { requestValidator, showValidator } from './validator.js';
 
 const routes = express.Router();
 
