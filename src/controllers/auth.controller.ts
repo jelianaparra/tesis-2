@@ -36,7 +36,7 @@ export const signUp = async (req: Request, res: Response): Promise<Response> => 
 export const signIn = async (req: Request, res: Response): Promise<Response> => {
   const { document, email, key } = req.body;
   try {
-    if (!email || !key) return res.status(422).json({
+    if (!document || !email || !key) return res.status(422).json({
       status: 422,
       error: 'Por favor, completa todos los campos'
     });
