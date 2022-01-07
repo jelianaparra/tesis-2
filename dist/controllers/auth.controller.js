@@ -59,7 +59,7 @@ exports.signUp = signUp;
 const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { document, email, key } = req.body;
     try {
-        if (!email || !key)
+        if (!document || !email || !key)
             return res.status(422).json({
                 status: 422,
                 error: 'Por favor, completa todos los campos'

@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import nodemailer from 'nodemailer';
-import multer from 'multer';
 
 import { pool } from '../database';
 import { queries } from '../utils/queries';

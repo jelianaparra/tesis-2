@@ -36,6 +36,7 @@ const createRequest = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
     }
     catch (e) {
+        console.log(e);
         return res.status(422).json({ status: 422, message: 'Error de servidor' });
     }
 });
